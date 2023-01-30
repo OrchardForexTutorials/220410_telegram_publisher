@@ -43,15 +43,18 @@ const int    UrlDefinedError  = 4014; // Because MT4 and MT5 are different
 
 void         OnStart( void ) {
 
+   // Added because bmp files seem to have stopped working, possibly a file format issue
+   string fileType = "png";
+   string fileName = "MyScreenshot." + fileType;
+
    // Save a screen shot
    ChartRedraw(); // Make sure the chart is up to date
-   ChartScreenShot( 0, "MyScreenshot.bmp", 1024, 768, ALIGN_RIGHT );
+   ChartScreenShot( 0, fileName, 1024, 768, ALIGN_RIGHT );
 
    SendTelegramMessage( TelegramApiUrl, TelegramBotToken, ChatId,
                                 "Test message " + TimeToString( TimeLocal() ) ); // no image attached
    SendTelegramMessage( TelegramApiUrl, TelegramBotToken, ChatId,
-                                "Test message with image " + TimeToString( TimeLocal() ),
-                                "MyScreenshot.jpg" );
+                                "Test message with image " + TimeToString( TimeLocal() ), fileName );
 }
 
 bool SendTelegramMessage( string url, string token, string chat, string text,
